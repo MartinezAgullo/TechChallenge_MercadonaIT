@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIMA Prediction</title>
+    <script>
+        async function makePrediction() {
+            const steps = document.getElementById("steps").value;
+            const response = await fetch("/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ steps: parseInt(steps) }),
+            });
+            const data = await response.json();
+            document.getElementById("prediction-result").innerHTML = JSON.stringify(data);
+        }
+    </script>
+</head>
+<body>
+    <h1>ARIMA Model Prediction</h1>
+    <label for="steps">Steps Ahead to Predict:</label>
+    <input type="number" id="steps" name="steps" min="1" value="10">
+    <button onclick="makePrediction()">Get Prediction</button>
+    <h2>Prediction Result:</h2>
+    <pre id="prediction-result"></pre>
+</body>
+</html>
